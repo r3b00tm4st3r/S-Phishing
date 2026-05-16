@@ -13,7 +13,7 @@ Comming Soon
 ## Installing and requirements
 sudo apt install nodejs npm -y
 
-git clone https://github.com/HackWithGullu/S-Phishing.git
+git clone https://github.com/r3b00tm4st3r/S-Phishing/.git
 
 cd S-Phishing
 
