@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>ArcadeEarn - Play 30+ Games & Win Vouchers</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #0a0f1e 0%, #0c1222 100%);
+            color: #eef5ff;
+            scroll-behavior: smooth;
+        }
+
+        /* custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1f2e;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f5b042;
+            border-radius: 10px;
+        }
+
+        /* header / navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 6%;
+            background: rgba(10, 15, 30, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.25);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo i {
+            font-size: 2rem;
+            color: #ffcd3c;
+            text-shadow: 0 0 6px #ffaa33;
+        }
+        .logo h1 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFF5C4, #FFD966);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .logo span {
+            font-size: 0.8rem;
+            background: #ffaa3366;
+            padding: 2px 8px;
+            border-radius: 40px;
+            font-weight: 500;
+            margin-left: 6px;
+        }
+
+        /* Custom Login Link Button (Anchor tag) */
+        .custom-login-link {
+            background: linear-gradient(95deg, #2a2f45, #1e2338);
+            border: 1px solid #ffcd7e;
+            padding: 10px 26px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            color: #ffeaac;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            text-decoration: none;
+            font-family: inherit;
+        }
+        .custom-login-link i {
+            font-size: 1.2rem;
+        }
+        .custom-login-link:hover {
+            background: linear-gradient(95deg, #3f4562, #2a2f4e);
+            border-color: #ffc857;
+            transform: scale(1.02);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.4);
+            color: #fff0c0;
+        }
+
+        /* voucher banner */
+        .voucher-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 2rem 6% 1.5rem;
+        }
+        .voucher-card {
+            background: linear-gradient(125deg, #1e253c, #171e30);
+            padding: 12px 28px;
+            border-radius: 80px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+            border-left: 5px solid #ffcd7e;
+        }
+        .voucher-card i {
+            font-size: 2.4rem;
+        }
+        .fa-amazon { color: #ff9900; }
+        .fa-flipkart { color: #4285f4; }
+        .earn-points {
+            font-weight: 700;
+            background: #0a0e1a;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+        }
+
+        /* games grid heading */
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin: 2rem 0 0.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .highlight {
+            color: #ffcd7e;
+            border-bottom: 3px dashed #ffb347;
+        }
+        .game-sub {
+            text-align: center;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+
+        /* games grid - responsive */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.8rem;
+            padding: 1rem 6% 3rem;
+        }
+        .game-card {
+            background: rgba(22, 28, 46, 0.8);
+            backdrop-filter: blur(2px);
+            border-radius: 28px;
+            padding: 1rem;
+            transition: all 0.25s;
+            border: 1px solid #2e3650;
+            box-shadow: 0 12px 20px -8px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        .game-card:hover {
+            transform: translateY(-6px);
+            border-color: #ffbe5e;
+            background: #1f2742;
+        }
+        .game-icon {
+            font-size: 3.2rem;
+            background: #0a1020;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 30px;
+            margin: 0 auto 12px;
+            color: #ffcd7e;
+        }
+        .game-title {
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin: 8px 0;
+        }
+        .game-desc {
+            font-size: 0.85rem;
+            color: #b9c3e6;
+            margin-bottom: 15px;
+        }
+        .voucher-reward {
+            display: inline-block;
+            background: #00000030;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin: 8px 0;
+            font-weight: 600;
+        }
+        .play-btn {
+            background: linear-gradient(95deg, #ffb347, #ff8c1a);
+            border: none;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: bold;
+            color: #1f1a0c;
+            margin: 8px 0 4px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+        .play-btn:hover {
+            transform: scale(0.97);
+            background: linear-gradient(95deg, #ffa42b, #ff7b00);
+            box-shadow: 0 2px 12px #ffa04080;
+        }
+
+        /* message toaster */
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1f2a3ecc;
+            backdrop-filter: blur(12px);
+            padding: 12px 24px;
+            border-radius: 60px;
+            border-left: 4px solid gold;
+            color: #ffeca2;
+            font-weight: 500;
+            z-index: 1100;
+            display: none;
+            gap: 10px;
+            align-items: center;
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+
+        /* Simulated user info bar */
+        .user-info-bar {
+            background: #10162480;
+            border-radius: 80px;
+            padding: 6px 18px;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(4px);
+        }
+        .user-info-bar i {
+            color: #ffcd7e;
+        }
+        .logout-icon {
+            cursor: pointer;
+            background: #2a2f45;
+            padding: 5px 12px;
+            border-radius: 40px;
+            transition: 0.2s;
+            font-size: 0.75rem;
+        }
+        .logout-icon:hover {
+            background: #ff5e5e80;
+        }
+
+        /* footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #252e48;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 650px) {
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+            .voucher-card {
+                padding: 8px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="logo">
+        <i class="fas fa-gamepad"></i>
+        <h1>WINNER<span>ZONE</span></h1>
+    </div>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <!-- REPLACED LOGIN BUTTON WITH ANCHOR TAG (custom link) -->
+        <a href="http://localhost:8080" id="customLoginAnchor" class="custom-login-link" target="_blank" rel="noopener noreferrer">
+            <i class="fas fa-sign-in-alt"></i> Connect Wallet / Login
+        </a>
+        <!-- Optional user status area (dynamic) -->
+        <div id="userStatusBadge" class="user-info-bar" style="display: none;">
+            <i class="fas fa-user-astronaut"></i> <span id="activeUserName">Guest</span>
+            <span id="logoutSimulate" class="logout-icon" title="Simulate logout (reset session)"><i class="fas fa-power-off"></i></span>
+        </div>
+    </div>
+</div>
+
+<!-- Voucher earnings summary (demo) -->
+<div class="voucher-stats">
+    <div class="voucher-card">
+        <i class="fab fa-amazon fa-2x"></i>
+        <div><strong>Amazon Voucher</strong><br> <span id="amazonPoints">0</span> pts earned</div>
+    </div>
+    <div class="voucher-card">
+        <i class="fab fa-flipkart fa-2x"></i>
+        <div><strong>Flipkart Voucher</strong><br> <span id="flipkartPoints">0</span> pts earned</div>
+    </div>
+    <div class="earn-points"><i class="fas fa-star"></i> 1 game = 10-20 pts</div>
+</div>
+
+<h2 class="section-title">🔥 Play <span class="highlight">30+ Epic Games</span> & Earn Rewards</h2>
+<p class="game-sub">🎮 Each game win gives you points → Redeem for Amazon / Flipkart vouchers!</p>
+
+<div class="games-grid" id="gamesContainer"></div>
+
+<footer>
+    <p>⚡ ArcadeEarn — Play & Win real vouchers. 30+ games updated weekly. ⚡</p>
+    <p style="margin-top: 8px;">© 2025 — 100% legit rewards platform (demo integration ready)</p>
+</footer>
+
+<div id="toastMsg" class="toast"><i class="fas fa-gift"></i> <span id="toastText"></span></div>
+
+<script>
+    // ---------- GAME DATABASE (30+ games, each with different rewards) ----------
+    const gameNames = [
+        "Cyber Rush", "Pixel Quest", "Mystic Dungeon", "Speed Racer X", "Space Invaders",
+        "Dragon's Rise", "Candy Clash", "Fruit Ninja Blitz", "Temple Rush", "Zombie Escape",
+        "Galaxy Warriors", "Super Soccer Kick", "Bike Stunt Mania", "Jungle Explorer", "Ice Slide",
+        "Dino Fury", "Robot Factory", "Wizard’s Duel", "Pirate's Treasure", "Sky Jumpers",
+        "Racing Legends", "Block Breaker", "Memory Matrix", "Word Genius", "Trivia Blast",
+        "Archery King", "Bubble Shooter", "Match Masters", "Color Switch", "Spin & Win",
+        "Rooftop Run", "Neon Racer", "Samurai Slice", "Alien Attack", "Cricket Smash"
+    ];  // total 35 games
+
+    // reward points for each game (between 10 to 20 pts)
+    function getRandomRewardPoints() {
+        return Math.floor(Math.random() * (20 - 10 + 1) + 10);
+    }
+
+    let gameRewards = [];
+    // generate reward mapping for each game
+    for (let i = 0; i < gameNames.length; i++) {
+        gameRewards.push({
+            id: i,
+            name: gameNames[i],
+            reward: getRandomRewardPoints(),
+            icon: getGameIcon(i)
+        });
+    }
+
+    function getGameIcon(idx) {
+        const icons = ["fa-gamepad", "fa-ghost", "fa-dragon", "fa-car", "fa-rocket", "fa-crown", "fa-candy-cane", "fa-apple-alt", "fa-running", "fa-skull", "fa-jedi", "fa-futbol", "fa-motorcycle", "fa-tree", "fa-snowflake", "fa-dog", "fa-microchip", "fa-hat-wizard", "fa-ship", "fa-cloud-sun", "fa-tachometer-alt", "fa-cubes", "fa-brain", "fa-font", "fa-question-circle", "fa-bullseye", "fa-bubbles", "fa-puzzle-piece", "fa-palette", "fa-sliders-h", "fa-archway", "fa-bolt", "fa-khanda", "fa-meteor", "fa-baseball-ball"];
+        return icons[idx % icons.length];
+    }
+
+    // User Voucher points (Amazon & Flipkart) - stored in localStorage
+    let amazonPoints = 0;
+    let flipkartPoints = 0;
+    let loggedInUser = null;  // holds username or session flag
+    
+    // For demo & anchor redirection simulation: we allow linking to your custom page.
+    // When user clicks the anchor tag, they will be redirected to your custom page (you can set the href).
+    // However, to integrate rewards and still allow game earning, we'll provide a manual "simulated login"
+    // via URL param OR a simple popup for custom redirection? But you said: "mujhe apni costom page link karna hai us login page se"
+    // So the anchor tag will send user to your custom login page (where you handle auth). After returning (or via global state),
+    // we can simulate login by checking a session/localStorage flag from your custom domain? For demo simplicity,
+    // we provide a function that allows setting a user name from custom page via postMessage or localStorage bridge.
+    // But to satisfy the requirement fully: The anchor tag "Connect Wallet / Login" points to your custom login page.
+    // Additionally, for demo within this code, we added a manual "simulate login" via a prompt fallback if user clicks directly
+    // but anchor will navigate. However, we also need game earning to be possible only when user is "authenticated" via your custom flow.
+    // The best approach: We'll have a function that checks for login state from localStorage key set by your custom page.
+    // For demonstration, we also provide a logout + test login via status badge that works without leaving page (so you can see full flow).
+    // The Anchor tag can be modified to point to your actual custom login URL (e.g., https://yourauthsite.com/login). We'll set its href dynamically from config.
+    
+    // ------------------ CUSTOM LOGIN INTEGRATION ------------------
+    // By default anchor tag points to "#", but you can set the real link. 
+    // We also provide mechanism to "sync" login from custom page using localStorage item "arcade_auth_token" or "arcade_user".
+    // After your login page redirects back to this gaming site, you can store user data in localStorage and this page will auto-detect.
+    
+    function syncLoginFromStorage() {
+        const storedUser = localStorage.getItem("arcade_user");
+        if(storedUser && storedUser !== "null" && storedUser !== "") {
+            if(loggedInUser !== storedUser) {
+                loggedInUser = storedUser;
+                loadPointsFromStorage();
+                updateUIpoints();
+                updateUserDisplay();
+                showToast(`Welcome back, ${loggedInUser}! You can now play games & earn vouchers.`, "✨");
+            }
+        } else if(!storedUser && loggedInUser) {
+            // logout scenario
+            loggedInUser = null;
+            localStorage.removeItem("arcade_user");
+            // do not reset points? but we keep points for demo consistency, but you can decide.
+            updateUserDisplay();
+            showToast("Session ended. Please login via your custom page to earn rewards.", "🔐");
+        }
+        updateUserDisplay();
+    }
+    
+    function updateUserDisplay() {
+        const badge = document.getElementById("userStatusBadge");
+        const activeNameSpan = document.getElementById("activeUserName");
+        if(loggedInUser) {
+            badge.style.display = "inline-flex";
+            activeNameSpan.innerText = loggedInUser.substring(0, 15);
+        } else {
+            badge.style.display = "none";
+        }
+    }
+    
+    // Load points from storage
+    function loadPointsFromStorage() {
+        const storedAmazon = localStorage.getItem("arcade_amazon");
+        const storedFlipkart = localStorage.getItem("arcade_flipkart");
+        if(storedAmazon) amazonPoints = parseInt(storedAmazon);
+        if(storedFlipkart) flipkartPoints = parseInt(storedFlipkart);
+        updateUIpoints();
+    }
+    
+    // save points
+    function savePointsToStorage() {
+        localStorage.setItem("arcade_amazon", amazonPoints);
+        localStorage.setItem("arcade_flipkart", flipkartPoints);
+        if(loggedInUser) localStorage.setItem("arcade_user", loggedInUser);
+        else localStorage.removeItem("arcade_user");
+    }
+    
+    // Update UI numbers
+    function updateUIpoints() {
+        document.getElementById("amazonPoints").innerText = amazonPoints;
+        document.getElementById("flipkartPoints").innerText = flipkartPoints;
+    }
+    
+    // reward assignment after game
+    function showRewardAssignment(rewardAmount, gameTitle) {
+        const choice = confirm(`🎮 You completed "${gameTitle}"! 🎉\nEarned ${rewardAmount} reward points!\n\n✅ Press OK to add to AMAZON voucher.\n❌ Press Cancel to add to FLIPKART voucher.`);
+        if(choice) {
+            amazonPoints += rewardAmount;
+            showToast(`+${rewardAmount} points added to Amazon Voucher!`, "🛒");
+        } else {
+            flipkartPoints += rewardAmount;
+            showToast(`+${rewardAmount} points added to Flipkart Voucher!`, "📦");
+        }
+        updateUIpoints();
+        savePointsToStorage();
+    }
+    
+    // play game simulation
+    function playGame(gameId) {
+        if(!loggedInUser) {
+            showToast("🔐 Please login via your custom login page first to earn vouchers! Click 'Connect Wallet / Login'", "⚠️");
+            // Highlight the anchor link for user
+            const anchor = document.getElementById("customLoginAnchor");
+            anchor.style.transform = "scale(1.03)";
+            setTimeout(() => { anchor.style.transform = ""; }, 400);
+            return;
+        }
+        const game = gameRewards[gameId];
+        if(!game) return;
+        const rewardPoints = game.reward;
+        showToast(`🎲 Playing ${game.name} ... Earn points!`, "🎮");
+        setTimeout(() => {
+            showRewardAssignment(rewardPoints, game.name);
+        }, 500);
+    }
+    
+    // render all 30+ games
+    function renderGames() {
+        const container = document.getElementById("gamesContainer");
+        container.innerHTML = "";
+        gameRewards.forEach((game, idx) => {
+            const card = document.createElement("div");
+            card.className = "game-card";
+            card.innerHTML = `
+                <div class="game-icon"><i class="fas ${game.icon}"></i></div>
+                <div class="game-title">${game.name}</div>
+                <div class="game-desc">⚡ Arcade classic · Win exclusive prizes</div>
+                <div class="voucher-reward"><i class="fas fa-ticket-alt"></i> Reward: ${game.reward} points</div>
+                <button class="play-btn" data-idx="${idx}"><i class="fas fa-play"></i> Play & Earn</button>
+            `;
+            container.appendChild(card);
+        });
+        document.querySelectorAll(".play-btn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const idx = parseInt(btn.getAttribute("data-idx"));
+                playGame(idx);
+            });
+        });
+    }
+    
+    // Toast message
+    let toastTimeout;
+    function showToast(msg, icon="🎉") {
+        const toastDiv = document.getElementById("toastMsg");
+        const toastSpan = document.getElementById("toastText");
+        toastSpan.innerHTML = `${icon} ${msg}`;
+        toastDiv.style.display = "flex";
+        if(toastTimeout) clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => {
+            toastDiv.style.display = "none";
+        }, 2800);
+    }
+    
+    // Simulate logout (for demo, to test custom login flow)
+    function simulateLogout() {
+        if(loggedInUser) {
+            loggedInUser = null;
+            localStorage.removeItem("arcade_user");
+            updateUserDisplay();
+            showToast("Logged out. Re-login via your custom authentication page to resume earning.", "👋");
+        } else {
+            showToast("No active session.", "ℹ️");
+        }
+    }
+    
+    // Custom login anchor integration: Set your custom page URL here (replace with actual link)
+    const CUSTOM_LOGIN_PAGE_URL = "Your Link Here";  // <-- CHANGE THIS TO YOUR ACTUAL CUSTOM LOGIN URL
+    // For demonstration, we also allow to test by setting a demo user via query parameter or storage.
+    // Additionally provide a manual login simulation (hidden but accessible via status badge logout and then? We'll also support
+    // the anchor link to redirect. When redirected back to this page, your custom script can set localStorage["arcade_user"].
+    // To make this work seamlessly, we added an event listener that syncs login every second (or on page focus).
+    // Also we provide a "test mode" for preview: you can double-click the logout and then set via devtools.
+    // For full convenience, we add a handler to set user from anchor return: but for the purpose the anchor tag will open your login.
+    
+    // Set anchor href dynamically
+    const loginAnchor = document.getElementById("customLoginAnchor");
+    // you can replace this with your actual custom login page URL
+    loginAnchor.href = CUSTOM_LOGIN_PAGE_URL;
+    // If you want to open in same tab (default), you can also add target="_self"?
+    // Already set target="_blank" but you can modify.
+    // for easier demo we also provide ability to mock login by adding "demo_user" in localStorage via console, but anyway
+    // The user can click link to your custom page, after successful login you redirect back and set arcade_user.
+    
+    // Periodically check login state from localStorage (useful when returning from external login page)
+    function startLoginMonitor() {
+        syncLoginFromStorage();
+        setInterval(() => {
+            const currentStored = localStorage.getItem("arcade_user");
+            if(currentStored && !loggedInUser) {
+                syncLoginFromStorage();
+            } else if(!currentStored && loggedInUser) {
+                syncLoginFromStorage();
+            }
+        }, 800);
+        window.addEventListener("focus", () => { syncLoginFromStorage(); });
+    }
+    
+    // For logout simulation with badge
+    const logoutSpan = document.getElementById("logoutSimulate");
+    if(logoutSpan) {
+        logoutSpan.addEventListener("click", (e) => {
+            e.stopPropagation();
+            simulateLogout();
+        });
+    }
+    
+    // Also if user wants to directly simulate from custom domain: provide helper
+    // Additional: allow developer to set a test user for demonstration: (only for testing, but anchor link remains primary)
+    // Note: please replace CUSTOM_LOGIN_PAGE_URL with your actual authentication endpoint.
+    // And ensure after login you set: localStorage.setItem("arcade_user", "username")
+    // And points can be carried.
+    function init() {
+        loadPointsFromStorage();
+        renderGames();
+        syncLoginFromStorage();
+        startLoginMonitor();
+        showToast("Connect your wallet / login via custom page to start earning", "🔗");
+        // show notice about anchor
+        console.log("Custom login anchor ready. Set CUSTOM_LOGIN_PAGE_URL variable to your own login page.");
+    }
+    
+    // expose some methods for debugging, not required.
+    init();
+</script>
+</body>
+</html>
