@@ -2,7 +2,7 @@
 ## S-Phishing
 This is a tool made in HTML, CSS and JavaScript which harvests the credentials of the victim and shows them to you and this tool is made only for educational purposes.
 ## Features
-This tool consists of a custom gaming web page that is designed to appear real to the victim.
+Comming Soon
 
 ## This Tool Tested On
 1. Kali Linux
@@ -28,3 +28,6 @@ Download cloudflare From https://developers.cloudflare.com/
 chmod +x cloudflared-linux-amd64
 
 ./cloudflared-linux-amd64 tunnel --url http://localhost:3000
+
+## Smart Phishing 
+
